@@ -1019,5 +1019,57 @@ def remove_from_cart():
             'message': str(e)
         }), 500
 
+@app.route('/cart/update', methods=['POST'])
+def update_cart_item():
+    try:
+        data = request.get_json()
+        user_id = data.get('userId')
+        product_id = data.get('productId')
+        quantity = data.get('quantity')
+
+        if not all([user_id, product_id, quantity]):
+            return jsonify({
+                'success': False,
+                'message': 'Thiếu thông tin cần thiết'
+            }), 400
+
+        # Kiểm tra số lượng hợp lệ
+        if not isinstance(quantity, int) or quantity < 1:
+            return jsonify({
+                'success': False,
+                'message': 'Số lượng không hợp lệ'
+            }), 400
+
+        # Cập nhật số lượng sản phẩm trong giỏ hàng
+        result = db.Cart.update_one(
+            {
+                'userId': user_id,
+                'items.productId': product_id
+            },
+            {
+                '$set': {
+                    'items.$.quantity': quantity,
+                    'updatedAt': datetime.now()
+                }
+            }
+        )
+
+        if result.modified_count > 0:
+            return jsonify({
+                'success': True,
+                'message': 'Đã cập nhật số lượng sản phẩm'
+            })
+
+        return jsonify({
+            'success': False,
+            'message': 'Không tìm thấy sản phẩm trong giỏ hàng'
+        }), 404
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -8,12 +8,12 @@ export default class OrderManager {
         // Lắng nghe sự kiện click trên các nút thanh toán
         document.addEventListener('click', (e) => {
             if (e.target.closest('.btn-checkout')) {
-                this.handleCheckout();
+                this.handleCheckout(e);
             }
         });
     }
 
-    async handleCheckout() {
+    async handleCheckout(e) {
         try {
             const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
             if (!user) {
@@ -21,25 +21,23 @@ export default class OrderManager {
                 return;
             }
 
-            // Lấy thông tin giỏ hàng
-            const response = await fetch(`http://localhost:5000/cart/${user.account_link}`);
-            const cartData = await response.json();
+            // Lấy thông tin sản phẩm từ card được click
+            const orderCard = e.target.closest('.order-card');
+            if (!orderCard) return;
 
-            if (!cartData.items || cartData.items.length === 0) {
-                this.showNotification('Giỏ hàng trống', 'error');
-                return;
-            }
+            const productId = orderCard.dataset.productId;
+            const quantity = orderCard.querySelector('.quantity-input').value;
+            const productName = orderCard.querySelector('.order-info h3').textContent;
+            const productPrice = parseInt(orderCard.querySelector('.order-price').textContent.replace(/[^\d]/g, ''));
 
-            // Tính tổng tiền và chuẩn bị dữ liệu thanh toán
-            const items = cartData.items.map(item => ({
-                name: item.product.name,
-                quantity: item.quantity,
-                price: item.product.price
-            }));
+            // Chuẩn bị dữ liệu thanh toán cho một sản phẩm
+            const items = [{
+                name: productName,
+                quantity: parseInt(quantity),
+                price: productPrice
+            }];
 
-            const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-            // Rút gọn mô tả để đảm bảo không quá 25 ký tự
+            const totalAmount = productPrice * parseInt(quantity);
             const description = `Thanh toan ${user.account_name}`;
 
             const paymentData = {
@@ -114,11 +112,17 @@ export default class OrderManager {
                             <span class="order-status in-cart">Trong giỏ hàng</span>
                         </div>
                         <div class="order-details">
-                            <img src="${item.product.image}" alt="${item.product.name}" class="order-image">
+                            <div class="product-image-container">
+                                <img src="${item.product.image}" alt="${item.product.name}" class="order-image">
+                            </div>
                             <div class="order-info">
                                 <h3>${item.product.name}</h3>
-                                <p>Số lượng: ${item.quantity}</p>
                                 <p class="order-price">${this.formatPrice(item.product.price)}</p>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="99">
+                                    <button class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
                                 <p class="item-total">Thành tiền: ${this.formatPrice(itemTotal)}</p>
                             </div>
                         </div>
@@ -137,7 +141,8 @@ export default class OrderManager {
             }).join('')}
         `;
 
-        // Thêm event listener cho nút xóa
+        // Thêm event listeners cho các nút điều khiển số lượng
+        this.attachQuantityControlListeners();
         this.attachRemoveListeners();
     }
 
@@ -183,6 +188,72 @@ export default class OrderManager {
         } catch (error) {
             console.error('Error removing item from cart:', error);
             this.showNotification('Không thể xóa sản phẩm', 'error');
+        }
+    }
+
+    attachQuantityControlListeners() {
+        document.querySelectorAll('.quantity-controls').forEach(control => {
+            const minusBtn = control.querySelector('.minus');
+            const plusBtn = control.querySelector('.plus');
+            const input = control.querySelector('.quantity-input');
+            const productId = control.closest('.order-card').dataset.productId;
+
+            minusBtn.addEventListener('click', () => {
+                if (input.value > 1) {
+                    input.value = parseInt(input.value) - 1;
+                    this.updateCartItemQuantity(productId, parseInt(input.value));
+                }
+            });
+
+            plusBtn.addEventListener('click', () => {
+                if (input.value < 99) {
+                    input.value = parseInt(input.value) + 1;
+                    this.updateCartItemQuantity(productId, parseInt(input.value));
+                }
+            });
+
+            input.addEventListener('change', () => {
+                let value = parseInt(input.value);
+                if (isNaN(value) || value < 1) value = 1;
+                if (value > 99) value = 99;
+                input.value = value;
+                this.updateCartItemQuantity(productId, value);
+            });
+        });
+    }
+
+    async updateCartItemQuantity(productId, quantity) {
+        try {
+            const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+            if (!user) return;
+
+            // Changed from PUT to POST method since PUT might not be allowed
+            const response = await fetch('http://localhost:5000/cart/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: user.account_link,
+                    productId: productId,
+                    quantity: quantity
+                })
+            });
+
+            // Add response validation
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data.success) {
+                this.loadCartItems();
+            } else {
+                throw new Error(data.message || 'Failed to update quantity');
+            }
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            this.showNotification('Không thể cập nhật số lượng', 'error');
         }
     }
 
