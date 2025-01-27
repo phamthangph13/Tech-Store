@@ -1,0 +1,220 @@
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb), 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0);
+    }
+}
+
+.verify-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.verify-modal .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(33, 33, 33, 0.95);
+    background: linear-gradient(135deg, rgba(33, 33, 33, 0.95), rgba(66, 66, 66, 0.95));
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    animation: slideIn 0.4s ease-out;
+}
+
+.verify-message {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--text-muted);
+    animation: fadeIn 0.5s ease-out 0.2s both;
+}
+
+.verify-message p:first-child {
+    margin-bottom: 10px;
+}
+
+.otp-inputs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+    animation: fadeIn 0.5s ease-out 0.3s both;
+}
+
+.otp-input {
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.otp-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.2);
+    outline: none;
+    animation: pulse 1s;
+}
+
+.verify-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out 0.4s both;
+}
+
+.verify-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.verify-button:active {
+    transform: translateY(0);
+}
+
+.verify-options {
+    margin-top: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out 0.5s both;
+}
+
+.countdown {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.resend-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+.resend-button:not(:disabled):hover {
+    color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.resend-button:disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+.back-to-register {
+    margin-top: 20px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out 0.6s both;
+}
+
+.back-to-register a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.back-to-register a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Modal header styling */
+.modal-header {
+    border-radius: 12px 12px 0 0;
+    margin: -20px -20px 20px -20px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    position: relative;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .verify-modal .modal-content {
+        width: 90%;
+        margin: 20px;
+    }
+
+    .otp-inputs {
+        gap: 5px;
+    }
+
+    .otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}

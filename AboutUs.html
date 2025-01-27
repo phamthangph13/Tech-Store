@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools & Tech Store</title>
+    <link rel="stylesheet" href="/Comp/CSS/header.css">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Login.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/Form/StyleForm/ForgetPassword.css">
+    <link rel="stylesheet" href="/Comp/CSS/Footer.css">
+    <link rel="stylesheet" href="/assets/AboutUs.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+</head>
+<body>
+    <!-- Header container -->
+    <div id="header-container"></div>
+
+    <!-- Modal containers - Thêm vào đây -->
+    <div id="loginModal" class="modal"></div>
+    <div id="registerModal" class="modal"></div>
+    <div id="forgotPasswordModal" class="modal"></div>
+    <div id="verifyModal" class="verify-modal"></div>
+
+    <!-- About Us Content -->
+    <main class="about-container">
+        <section class="hero-section" data-aos="fade-up">
+            <h1>Về Chúng Tôi</h1>
+            <p>Đồng hành cùng bạn trong kỷ nguyên công nghệ AI</p>
+        </section>
+
+        <section class="mission-section" data-aos="fade-up">
+            <div class="mission-content">
+                <h2>Sứ mệnh của chúng tôi</h2>
+                <p>Cung cấp những công cụ AI tốt nhất và hỗ trợ khách hàng tối ưu hóa công việc</p>
+            </div>
+            <div class="mission-image" data-aos="fade-left"></div>
+        </section>
+
+        <section class="team-section">
+            <h2>Đội ngũ của chúng tôi</h2>
+            <div class="team-grid">
+                <div class="team-member" data-aos="flip-left">
+                    <div class="member-image"></div>
+                    <h3>Nguyễn Văn A</h3>
+                    <p>Giám đốc điều hành</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-image"></div>
+                    <h3>Trần Thị B</h3>
+                    <p>Giám đốc công nghệ</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="200">
+                    <div class="member-image"></div>
+                    <h3>Lê Văn C</h3>
+                    <p>Trưởng phòng AI</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" data-aos="fade-up">
+            <div class="stat-item">
+                <h3>1000+</h3>
+                <p>Khách hàng</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Công cụ AI</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Hỗ trợ</p>
+            </div>
+        </section>
+
+        <!-- New Values Section -->
+        <section class="values-section" data-aos="fade-up">
+            <h2>Giá trị cốt lõi</h2>
+            <div class="values-grid">
+                <div class="value-item" data-aos="zoom-in">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Đổi mới</h3>
+                    <p>Luôn đi đầu trong việc áp dụng công nghệ AI mới nhất vào các giải pháp</p>
+                </div>
+                <div class="value-item" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Tin cậy</h3>
+                    <p>Cam kết bảo mật và độ tin cậy cao trong mọi sản phẩm</p>
+                </div>
+                <div class="value-item" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-users"></i>
+                    <h3>Khách hàng</h3>
+                    <p>Đặt trải nghiệm và sự hài lòng của khách hàng lên hàng đầu</p>
+                </div>
+                <div class="value-item" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Hiệu quả</h3>
+                    <p>Tối ưu hóa quy trình và mang lại kết quả vượt trội</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Timeline Section -->
+        <section class="timeline-section" data-aos="fade-up">
+            <h2>Hành trình phát triển</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <h3>2020</h3>
+                        <p>Thành lập công ty với đội ngũ 5 thành viên</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <h3>2021</h3>
+                        <p>Ra mắt sản phẩm AI đầu tiên và đạt 100 khách hàng</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <h3>2022</h3>
+                        <p>Mở rộng thị trường và đạt 500+ khách hàng</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <h3>2023</h3>
+                        <p>Phát triển đội ngũ lên 50+ nhân viên, ra mắt 10 sản phẩm mới</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Testimonials Section -->
+        <section class="testimonials-section" data-aos="fade-up">
+            <h2>Khách hàng nói gì về chúng tôi</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Sản phẩm AI của công ty đã giúp chúng tôi tăng hiệu suất làm việc lên 200%"</p>
+                        <div class="testimonial-author">
+                            <img src="../assets/testimonial1.jpg" alt="Khách hàng">
+                            <div>
+                                <h4>Nguyễn Văn X</h4>
+                                <p>CEO Công ty ABC</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left"></i>
+                        <p>"Đội ngũ hỗ trợ chuyên nghiệp và nhiệt tình. Sản phẩm vượt xa mong đợi"</p>
+                        <div class="testimonial-author">
+                            <img src="../assets/testimonial2.jpg" alt="Khách hàng">
+                            <div>
+                                <h4>Trần Thị Y</h4>
+                                <p>Giám đốc Marketing XYZ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Contact CTA Section -->
+        <section class="contact-cta" data-aos="zoom-in">
+            <h2>Bắt đầu hành trình AI của bạn</h2>
+            <p>Hãy để chúng tôi đồng hành cùng sự phát triển của doanh nghiệp bạn</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary">Liên hệ ngay</a>
+                <a href="#" class="btn-secondary">Xem demo</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="/Comp/Comp.js"></script>
+    <script src="/JS/Auth.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

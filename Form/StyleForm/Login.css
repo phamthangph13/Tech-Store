@@ -1,0 +1,304 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, rgba(33, 33, 33, 0.95), rgba(66, 66, 66, 0.95));
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    animation: modalFadeIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    color: #ffffff;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.modal-header {
+    background-color: #4285f4;
+    margin: -40px -40px 30px -40px;
+    padding: 0 40px;
+    border-radius: 24px 24px 0 0;
+    height: 80px;
+    position: relative;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 15px;
+    left: 48px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    right: 40px;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+/* Đảm bảo modal hiển thị trên cùng */
+#loginModal,
+#registerModal,
+#forgotPasswordModal {
+    z-index: 9999;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 45px;
+    border: none;
+    border-radius: 12px;
+    background-color: #252b3b;
+    color: #ffffff;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.input-group input::placeholder {
+    color: #8b95a9;
+}
+
+.input-group input:focus {
+    background-color: #2a3142;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+    outline: none;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8b95a9;
+    transition: color 0.3s ease;
+}
+
+.input-group input:focus + i {
+    color: #4285f4;
+}
+
+.input-group .toggle-password {
+    left: auto;
+    right: 12px;
+    cursor: pointer;
+}
+
+.login-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background-color: #4285f4;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #357abd;
+    transform: translateY(-2px);
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.social-buttons button {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #252b3b;
+    border: 1px solid #353c4e;
+    color: #ffffff;
+}
+
+.google-btn {
+    background-color: #ffffff;
+    color: #444;
+    border: 2px solid #eaeaea;
+}
+
+.google-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+}
+
+.facebook-btn {
+    background-color: #1877f2;
+    color: white;
+    border: none;
+}
+
+.facebook-btn:hover {
+    background-color: #166fe5;
+}
+
+.social-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.remember-me {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #8b95a9;
+}
+
+.remember-me input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #4285f4;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.remember-me input[type="checkbox"]:checked {
+    background-color: #4285f4;
+    border-color: #4285f4;
+}
+
+.remember-me input[type="checkbox"]:checked::before {
+    content: '✓';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.forgot-password {
+    color: #4285f4;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #357abd;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+    color: #8b95a9;
+}
+
+.register-link a {
+    color: #4285f4;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+    color: #357abd;
+}
+
+.modal-overlay {
+    animation: overlayFadeIn 0.3s ease;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Divider text */
+.divider-text {
+    text-align: center;
+    color: #8b95a9;
+    margin: 20px 0;
+    position: relative;
+}
+
+.divider-text::before,
+.divider-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #353c4e;
+}
+
+.divider-text::before {
+    left: 0;
+}
+
+.divider-text::after {
+    right: 0;
+}
+

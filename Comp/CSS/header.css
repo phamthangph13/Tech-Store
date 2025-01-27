@@ -1,0 +1,267 @@
+/* Header Styles */
+header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid transparent;
+    background-image: linear-gradient(white, white), 
+                     linear-gradient(90deg, #4F46E5, #60A5FA, #34D399);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+/* Navigation */
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Styles */
+.logo {
+    margin-right: 3rem;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #78c1ee;
+    position: relative;
+    animation: logoFloat 3s ease-in-out infinite;
+    line-height: 0.9;
+    text-align: left;
+}
+
+.logo h1:first-line {
+    margin-bottom: 0.5rem;
+}
+
+.logo h1 span.store {
+    display: block;
+    padding-left: 2rem;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1E293B;
+    text-decoration: none;
+    padding: 0.8rem 1.2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+/* Button Styles */
+.nav-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.login-btn, .signup-btn {
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 80px;
+        right: -100%;
+        width: 100%;
+        background: var(--surface-color);
+        padding: 1rem;
+        gap: 1rem;
+        margin: 0;
+        transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .menu-toggle {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-color);
+    }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-links {
+        position: static;
+        width: auto;
+        height: auto;
+        background: none;
+        padding: 0;
+    }
+} 
+
+/* Logo Animation */
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes typing {
+    0%, 90%, 100% { width: 0; }
+    30%, 60% { width: 100%; }
+}
+
+/* Logo Text Effect */
+.logo h1::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: #4F46E5;
+    overflow: hidden;
+    animation: typing 8s infinite;
+    white-space: pre-line;
+}
+
+/* Nav Links Hover Effect */
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #4F46E5, #60A5FA);
+    opacity: 0;
+    z-index: -1;
+    transform: scale(0.8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover {
+    color: white;
+}
+
+.nav-links a:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Button Styles */
+.login-btn {
+    background: transparent;
+    color: #4F46E5;
+    border: 2px solid #4F46E5;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.login-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, #4F46E5, #60A5FA);
+    transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+}
+
+.login-btn:hover {
+    color: white;
+    border-color: transparent;
+}
+
+.login-btn:hover::before {
+    transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+}
+
+.signup-btn {
+    background: linear-gradient(45deg, #4F46E5, #60A5FA);
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.signup-btn::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #34D399, #60A5FA);
+    top: 0;
+    left: -100%;
+    transition: 0.5s;
+}
+
+.signup-btn:hover::before {
+    left: 0;
+}
+
+.signup-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Button Animations */
+.nav-buttons button {
+    transform-origin: center;
+    animation: buttonPop 0.3s ease-out;
+}
+
+@keyframes buttonPop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.nav-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+    animation: buttonPulse 1s infinite;
+}
+
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+} 

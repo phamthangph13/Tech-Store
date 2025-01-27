@@ -1,0 +1,7 @@
+flask
+pymongo
+bcrypt
+flask-swagger-ui
+flask-cors
+PyJWT
+payos

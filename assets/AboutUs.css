@@ -1,0 +1,373 @@
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    color: #e5e7eb;
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 100px 0;
+    background: linear-gradient(135deg, #3d6cad 0%, #374151 100%);
+    color: white;
+    border-radius: 20px;
+    margin-bottom: 60px;
+    border: 1px solid #4b5563;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease;
+    color: #f3f4f6;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Mission Section */
+.mission-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: center;
+}
+
+.mission-content {
+    padding: 40px;
+}
+
+.mission-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #f3f4f6;
+}
+
+.mission-image {
+    height: 400px;
+    background-image: url('https://haiants.vn/images/Upload/images/Tintuc/2022/Ti%E1%BB%87c%20T%E1%BA%A5t%20ni%C3%AAn%202022/TG%C4%90%20ph%C3%A1t%20bi%E1%BB%83u.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    border: 1px solid #4b5563;
+}
+
+/* Team Section */
+.team-section {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.team-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #f3f4f6;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.team-member {
+    background: #1f2937;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    border: 1px solid #4b5563;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.3);
+    background: #2d3748;
+}
+
+.member-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background-color: #374151;
+    background-size: cover;
+}
+
+/* Stats Section */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    text-align: center;
+    padding: 60px 0;
+    background: #1f2937;
+    border-radius: 20px;
+    border: 1px solid #4b5563;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    color: #60a5fa;
+    margin-bottom: 10px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mission-section {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* Values Section */
+.values-section {
+    padding: 80px 0;
+    background: #111827;
+    border-radius: 20px;
+    margin-bottom: 60px;
+    border: 1px solid #4b5563;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 40px;
+}
+
+.value-item {
+    text-align: center;
+    padding: 30px;
+    background: #1f2937;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 1px solid #4b5563;
+}
+
+.value-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.3);
+    background: #2d3748;
+}
+
+.value-item i {
+    font-size: 2.5rem;
+    color: #60a5fa;
+    margin-bottom: 20px;
+}
+
+.value-item h3 {
+    color: #f3f4f6;
+}
+
+/* Timeline Section */
+.timeline-section {
+    padding: 80px 0;
+    position: relative;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background: #60a5fa;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+
+.timeline-content {
+    padding: 20px;
+    background: #1f2937;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #4b5563;
+    color: #e5e7eb;
+}
+
+.timeline-content h3 {
+    color: #60a5fa;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    padding: 80px 0;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 40px 0;
+}
+
+.testimonial {
+    background: #1f2937;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #4b5563;
+}
+
+.testimonial-content i {
+    color: #60a5fa;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.testimonial-content p {
+    color: #e5e7eb;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.testimonial-author h4 {
+    color: #f3f4f6;
+}
+
+/* Contact CTA Section */
+.contact-cta {
+    text-align: center;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+    color: white;
+    border-radius: 20px;
+    margin: 60px 0;
+    border: 1px solid #4b5563;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.btn-primary {
+    background: #60a5fa;
+    color: #111827;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #f3f4f6;
+    border: 2px solid #60a5fa;
+}
+
+.btn-primary:hover {
+    background: #3b82f6;
+}
+
+.btn-secondary:hover {
+    background: rgba(96, 165, 250, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline::before {
+        background: #60a5fa;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+    }
+    
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Section Headers */
+section h2 {
+    color: #f3f4f6;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Additional Hover Effects */
+.team-member:hover,
+.value-item:hover,
+.testimonial:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.3);
+    background: #2d3748;
+}

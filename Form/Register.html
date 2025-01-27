@@ -1,0 +1,60 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2>Đăng Ký</h2>
+        <button class="close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+        <form id="registerForm">
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="register-fullname" placeholder="Họ và tên" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="register-password" placeholder="Mật khẩu" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="register-confirm-password" placeholder="Xác nhận mật khẩu" required>
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+            </div>
+            <div class="form-options">
+                <label class="terms-service">
+                    <input type="checkbox" id="terms" required>
+                    <span class="checkmark"></span>
+                    Tôi đồng ý với các điều khoản dịch vụ
+                </label>
+            </div>
+            <button type="submit" class="register-button">Đăng Ký</button>
+        </form>
+        <div class="social-login">
+            <p>Hoặc đăng ký với</p>
+            <div class="social-buttons">
+                <button class="google-btn">
+                    <i class="fab fa-google"></i>
+                    Google
+                </button>
+                <button class="facebook-btn">
+                    <i class="fab fa-facebook-f"></i>
+                    Facebook
+                </button>
+            </div>
+        </div>
+        <div class="login-link">
+            Đã có tài khoản? <a href="#">Đăng nhập</a>
+        </div>
+    </div>
+</div>

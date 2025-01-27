@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools & Tech Store</title>
+    <link rel="stylesheet" href="/Comp/CSS/header.css">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Login.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/Form/StyleForm/ForgetPassword.css">
+    <link rel="stylesheet" href="/Comp/CSS/Footer.css">
+    <link rel="stylesheet" href="/assets/DashBoard/DashBoard.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Payment.css">
+    
+    <link rel="stylesheet" href="/assets/DashBoard/Profile.css">
+    <link rel="stylesheet" href="/assets/DashBoard/Oders.css">
+    <link rel="stylesheet" href="/assets/DashBoard/Services.css">
+    <link rel="stylesheet" href="/assets/DashBoard/Settings.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+</head>
+<body> 
+    <!-- Header container -->
+    <div id="header-container"></div>
+
+    <!-- Modal containers -->
+    <div id="loginModal" class="modal"></div>
+    <div id="registerModal" class="modal"></div>
+    <div id="forgotPasswordModal" class="modal"></div>
+    <div id="addressModal" class="modal">
+        <div class="modal-content address-sheet">
+            <div class="modal-header">
+                <h3><i class="fas fa-map-marker-alt"></i> Quản lý địa chỉ</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            
+            <!-- Danh sách địa chỉ hiện có -->
+            <div class="address-list">
+                <!-- Địa chỉ sẽ được thêm động bằng JavaScript -->
+            </div>
+
+            <!-- Nút thêm địa chỉ mới -->
+            <button class="btn-add-address">
+                <i class="fas fa-plus"></i>
+                Thêm địa chỉ mới
+            </button>
+
+            <!-- Form thêm/sửa địa chỉ (ẩn mặc định) -->
+            <form id="addressForm" class="address-form" style="display: none;">
+                <div class="form-group">
+                    <label><i class="fas fa-city"></i> Tỉnh/Thành phố</label>
+                    <select id="provinceSelect" required>
+                        <option value="">Chọn Tỉnh/Thành phố</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> Quận/Huyện</label>
+                    <select id="districtSelect" required>
+                        <option value="">Chọn Quận/Huyện</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-map"></i> Phường/Xã</label>
+                    <select id="wardSelect" required>
+                        <option value="">Chọn Phường/Xã</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-home"></i> Địa chỉ cụ thể</label>
+                    <input 
+                        type="text" 
+                        id="specificAddress" 
+                        placeholder="Ví dụ: Số 123, Đường ABC..." 
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-sticky-note"></i> Ghi chú</label>
+                    <textarea 
+                        id="addressNote" 
+                        placeholder="Thêm ghi chú về địa chỉ của bạn (không bắt buộc)"
+                    ></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Nhãn địa chỉ</label>
+                    <select id="addressLabel" required>
+                        <option value="home">🏠 Nhà riêng</option>
+                        <option value="office">🏢 Văn phòng</option>
+                        <option value="company">🏭 Công ty</option>
+                        <option value="other">📍 Khác</option>
+                    </select>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="isDefault">
+                    <label for="isDefault">Đặt làm địa chỉ mặc định</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel-form">Hủy</button>
+                    <button type="submit" class="btn-save-address">
+                        <i class="fas fa-save"></i>
+                        Lưu địa chỉ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" data-aos="fade-right">
+            <div class="sidebar-header">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..." 
+                     alt="Profile Avatar" 
+                     class="profile-avatar"
+                     style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 2px solid #4361ee;">
+                <h3 class="user-name"></h3>
+                <span class="user-role"></span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" data-page="profile">Trang Cá Nhân</a>
+                <a href="#" data-page="orders">Đặt Hàng</a>
+                <a href="#" data-page="services">Dịch Vụ</a>
+                <a href="#" data-page="settings">Cài Đặt</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Profile Section -->
+            <section id="profile-section" class="dashboard-section">
+                <h2 class="section-title" data-aos="fade-right">Trang Cá Nhân</h2>
+                <div class="profile-grid">
+                    <!-- Thông tin cá nhân -->
+                    <div class="profile-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="profile-header">
+                            <div class="profile-avatar-container">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA..." 
+                                     alt="Profile Avatar" 
+                                     class="profile-avatar">
+                                <div class="avatar-overlay">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                            <h3></h3>
+                            <p></p>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <div class="stat-details">
+                                    <span class="stat-value">0</span>
+                                    <span class="stat-label">Đơn hàng</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-star"></i>
+                                <div class="stat-details">
+                                    <span class="stat-value">0.0</span>
+                                    <span class="stat-label">Đánh giá</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Thông tin chi tiết -->
+                    <div class="profile-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Thông Tin Chi Tiết</h3>
+                        <form class="profile-form">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="emailInput" placeholder="Email" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Họ và tên</label>
+                                <input type="text" id="fullnameInput" placeholder="Họ và tên">
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="tel" id="phoneInput" placeholder="Số điện thoại">
+                            </div>
+                            <div class="form-group">
+                                <label>Địa chỉ</label>
+                                <input type="text" id="addressInput" placeholder="Địa chỉ">
+                            </div>
+                            <button type="submit">Lưu thay đổi</button>
+                        </form>
+                    </div>
+
+                    <!-- Hoạt động gần đây -->
+                    <div class="profile-card" data-aos="fade-up" data-aos-delay="300">
+                        <h3>Hoạt Động Gần Đây</h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <i class="fas fa-shopping-bag"></i>
+                                <div class="activity-details">
+                                    <p>Đã mua AI Development Kit</p>
+                                    <span>2 giờ trước</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-star"></i>
+                                <div class="activity-details">
+                                    <p>Đánh giá 5 sao cho AI Chat Bot</p>
+                                    <span>1 ngày trước</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-comment"></i>
+                                <div class="activity-details">
+                                    <p>Bình luận về Machine Learning Course</p>
+                                    <span>3 ngày trước</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders-section" class="dashboard-section" style="display: none;">
+                <h2 class="section-title" data-aos="fade-right">Đơn Hàng Của Bạn</h2>
+                
+                <!-- Đơn hàng trong giỏ -->
+                <div class="orders-category" data-aos="fade-up">
+                    <h3 class="category-title">
+                        <i class="fas fa-shopping-cart"></i>
+                        Đơn Hàng Trong Giỏ
+                    </h3>
+                    <div class="orders-grid">
+                        <div class="order-card cart-item" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="order-header">
+                                <span class="order-date">Thêm vào: 20/03/2024</span>
+                                <span class="order-status in-cart">Trong giỏ hàng</span>
+                            </div>
+                            <div class="order-details">
+                                <img src="../assets/product1.jpg" alt="AI Development Kit" class="order-image">
+                                <div class="order-info">
+                                    <h3>AI Development Kit</h3>
+                                    <p>Số lượng: 1</p>
+                                    <p class="order-price">2,999,000 ₫</p>
+                                </div>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-checkout">
+                                    <i class="fas fa-credit-card"></i>
+                                    Thanh toán
+                                </button>
+                                <button class="btn-remove">
+                                    <i class="fas fa-trash"></i>
+                                    Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đơn hàng đã đặt -->
+                <div class="orders-category" data-aos="fade-up">
+                    <h3 class="category-title">
+                        <i class="fas fa-box"></i>
+                        Đơn Hàng Đã Đặt
+                    </h3>
+                    <div class="orders-grid">
+                        <div class="order-card placed-order" data-aos="zoom-in" data-aos-delay="100">
+                            <div class="order-header">
+                                <span class="order-id">#ORD-2024-001</span>
+                                <span class="order-status pending">Đang xử lý</span>
+                            </div>
+                            <div class="order-progress">
+                                <div class="progress-step active">
+                                    <i class="fas fa-clipboard-check"></i>
+                                    <span>Đã đặt</span>
+                                </div>
+                                <div class="progress-step active">
+                                    <i class="fas fa-box-open"></i>
+                                    <span>Đóng gói</span>
+                                </div>
+                                <div class="progress-step">
+                                    <i class="fas fa-shipping-fast"></i>
+                                    <span>Vận chuyển</span>
+                                </div>
+                                <div class="progress-step">
+                                    <i class="fas fa-home"></i>
+                                    <span>Đã giao</span>
+                                </div>
+                            </div>
+                            <div class="order-details">
+                                <img src="../assets/product2.jpg" alt="Machine Learning Course" class="order-image">
+                                <div class="order-info">
+                                    <h3>Machine Learning Course</h3>
+                                    <p>Số lượng: 1</p>
+                                    <p class="order-price">1,499,000 ₫</p>
+                                </div>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-track">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Theo dõi
+                                </button>
+                                <button class="btn-cancel">
+                                    <i class="fas fa-times"></i>
+                                    Hủy đơn
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="order-card placed-order" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="order-header">
+                                <span class="order-id">#ORD-2024-002</span>
+                                <span class="order-status delivered">Đã giao</span>
+                            </div>
+                            <div class="order-progress">
+                                <div class="progress-step active">
+                                    <i class="fas fa-clipboard-check"></i>
+                                    <span>Đã đặt</span>
+                                </div>
+                                <div class="progress-step active">
+                                    <i class="fas fa-box-open"></i>
+                                    <span>Đóng gói</span>
+                                </div>
+                                <div class="progress-step active">
+                                    <i class="fas fa-shipping-fast"></i>
+                                    <span>Vận chuyển</span>
+                                </div>
+                                <div class="progress-step active">
+                                    <i class="fas fa-home"></i>
+                                    <span>Đã giao</span>
+                                </div>
+                            </div>
+                            <div class="order-details">
+                                <img src="../assets/product3.jpg" alt="AI Chat Bot" class="order-image">
+                                <div class="order-info">
+                                    <h3>AI Chat Bot</h3>
+                                    <p>Số lượng: 1</p>
+                                    <p class="order-price">999,000 ₫</p>
+                                </div>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn-review">
+                                    <i class="fas fa-star"></i>
+                                    Đánh giá
+                                </button>
+                                <button class="btn-reorder">
+                                    <i class="fas fa-redo"></i>
+                                    Mua lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services-section" class="dashboard-section" style="display: none;">
+                <h2 class="section-title" data-aos="fade-right">Dịch Vụ Của Chúng Tôi</h2>
+                
+                <!-- Free Services -->
+                <h3 class="services-subtitle free" data-aos="fade-right">
+                    <i class="fas fa-gift"></i> Dịch Vụ Miễn Phí
+                </h3>
+                <div class="services-grid" id="free-services-grid">
+                    <!-- Free services will be dynamically inserted here -->
+                </div>
+
+                <!-- Premium Services -->
+                <h3 class="services-subtitle premium" data-aos="fade-right">
+                    <i class="fas fa-crown"></i> Dịch Vụ Premium
+                </h3>
+                <div class="services-grid" id="premium-services-grid">
+                    <!-- Premium services will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="dashboard-section" style="display: none;">
+                <h2 class="section-title" data-aos="fade-right">Cài Đặt Hệ Thống</h2>
+                <div class="settings-grid">
+                    <!-- Theme Settings Card -->
+                    <div class="settings-card" data-aos="fade-up" data-aos-delay="100">
+                        <h3><i class="fas fa-palette"></i> Giao Diện</h3>
+                        <div class="theme-selector">
+                            <button class="theme-btn active" data-theme="dark">
+                                <i class="fas fa-moon"></i> Dark
+                            </button>
+                            <button class="theme-btn" data-theme="light">
+                                <i class="fas fa-sun"></i> Light
+                            </button>
+                        </div>
+                        <div class="color-scheme">
+                            <h4>Màu sắc chủ đạo</h4>
+                            <div class="color-options">
+                                <div class="color-option" style="background: #4361ee"></div>
+                                <div class="color-option" style="background: #3f37c9"></div>
+                                <div class="color-option" style="background: #2a9d8f"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings Card -->
+                    <div class="settings-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3><i class="fas fa-shield-alt"></i> Bảo Mật</h3>
+                        <form class="security-form">
+                            <div class="form-group">
+                                <label>Mật khẩu hiện tại</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="Nhập mật khẩu hiện tại">
+                                    <i class="fas fa-eye-slash toggle-password"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mật khẩu mới</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="Nhập mật khẩu mới">
+                                    <i class="fas fa-eye-slash toggle-password"></i>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Xác nhận mật khẩu mới</label>
+                                <div class="password-input">
+                                    <input type="password" placeholder="Xác nhận mật khẩu mới">
+                                    <i class="fas fa-eye-slash toggle-password"></i>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-change-password">
+                                <i class="fas fa-key"></i> Đổi Mật Khẩu
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Account Actions Card -->
+                    <div class="settings-card danger-zone" data-aos="fade-up" data-aos-delay="300">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Tài Khoản</h3>
+                        <div class="account-actions">
+                            <button class="btn-logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng Xuất
+                            </button>
+                        
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer container -->
+    <div id="footer-container"></div>
+
+    <!-- Thêm confirm modal -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-content">
+            <h4><i class="fas fa-exclamation-triangle"></i> Xác nhận thoát</h4>
+            <p>Bạn có chắc chắn muốn thoát? Tất cả thông tin đã nhập sẽ bị mất.</p>
+            <div class="confirm-buttons">
+                <button class="confirm-btn confirm-yes">Đồng ý</button>
+                <button class="confirm-btn confirm-no">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - Sắp xếp lại thứ tự -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Khởi tạo AOS sau khi tất cả scripts đã load
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true // Thêm option này để animation chỉ chạy một lần
+            });
+        });
+    </script>
+    <script src="../Comp/Comp.js"></script>
+    <script src="../JS/Auth.js"></script>
+    <script src="../JS/Dashboard.js"></script>
+    <script src="../JS/Settings.js"></script>
+    <script type="module" src="../JS/Services.js"></script>
+
+    <!-- Thêm script xử lý confirm modal -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addressModal = document.getElementById('addressModal');
+        const confirmModal = document.getElementById('confirmModal');
+        const closeBtn = addressModal.querySelector('.close-modal');
+        const addressForm = document.getElementById('addressForm');
+
+        // Hàm hiển thị confirm modal
+        function showConfirmModal() {
+            confirmModal.style.display = 'flex';
+        }
+
+        // Hàm ẩn confirm modal
+        function hideConfirmModal() {
+            confirmModal.style.display = 'none';
+        }
+
+        // Hàm đóng address modal và reset form
+        function closeAddressModal() {
+            addressModal.style.display = 'none';
+            addressForm.reset();
+            hideConfirmModal();
+        }
+
+        // Xử lý khi click nút đóng
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Kiểm tra xem form có dữ liệu nào được nhập chưa
+            const formData = new FormData(addressForm);
+            let hasData = false;
+            for(let value of formData.values()) {
+                if(value) {
+                    hasData = true;
+                    break;
+                }
+            }
+            
+            if(hasData) {
+                showConfirmModal();
+            } else {
+                closeAddressModal();
+            }
+        });
+
+        // Xử lý các nút trong confirm modal
+        document.querySelector('.confirm-yes').addEventListener('click', closeAddressModal);
+        document.querySelector('.confirm-no').addEventListener('click', hideConfirmModal);
+
+        // Đóng confirm modal khi click bên ngoài
+        confirmModal.addEventListener('click', function(e) {
+            if(e.target === confirmModal) {
+                hideConfirmModal();
+            }
+        });
+    });
+    </script>
+
+    <!-- Thêm type="module" để sử dụng ES modules -->
+    <script type="module">
+        import OrderManager from '../BackEnd/Orders/Orders.js';
+        // OrderManager sẽ tự động khởi tạo và xử lý các sự kiện
+    </script>
+</body>
+</html>

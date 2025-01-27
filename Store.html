@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa Hàng - Tech Store</title>
+    <link rel="stylesheet" href="/Comp/CSS/header.css">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Login.css">
+    <link rel="stylesheet" href="/Form/StyleForm/Register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/Form/StyleForm/ForgetPassword.css">
+    <link rel="stylesheet" href="/Comp/CSS/Footer.css">
+    <link rel="stylesheet" href="/assets/Store.css">
+</head>
+<body>
+    <!-- Header container --> 
+    <div id="header-container"></div>
+
+    <!-- Modal containers -->
+    <div id="loginModal" class="modal"></div>
+    <div id="registerModal" class="modal"></div>
+    <div id="forgotPasswordModal" class="modal"></div>
+    <div id="verifyModal" class="verify-modal"></div>
+
+    <!-- Store Content -->
+    <main class="store-container">
+        <div class="store-hero">
+            <h1>Tech Store Premium</h1>
+            <p>Khám phá các sản phẩm và dịch vụ độc quyền</p>
+        </div>
+
+        <div class="category-filter">
+            <button class="filter-btn active" data-category="all">Tất cả</button>
+            <button class="filter-btn" data-category="robots">Robot</button>
+            <button class="filter-btn" data-category="services">Dịch vụ</button>
+        </div>
+
+        <div class="products-grid">
+            <!-- Products will be loaded dynamically -->
+        </div>
+    </main>
+
+    <!-- Footer container -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts -->
+    <script src="/Comp/Comp.js"></script>
+    <script src="/JS/Auth.js"></script>
+    <script src="/JS/store.js"></script>
+</body>
+</html>

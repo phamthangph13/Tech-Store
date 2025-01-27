@@ -1,0 +1,10 @@
+#PAYOS
+CLIENT_ID = "c957f077-88ad-4514-baab-d1d09af2ab9e"
+API_KEY = "7bcb0e37-2200-4715-b5d7-f88528a81c0d"
+CHECKSUM_KEY = "f562322a43c61e9ff92d871dfcd5c23ffb4f1f07baefd1c31c2e0ea426ce81f6"
+
+#MAIL STMP
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+SMTP_USERNAME = "dounecompany@gmail.com"
+SMTP_PASSWORD = "zasa vbpy arko snov"

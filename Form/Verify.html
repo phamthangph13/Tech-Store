@@ -1,0 +1,36 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2>Xác Thực Email</h2>
+        <button class="close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div class="verify-message">
+            <p>Chúng tôi đã gửi mã xác thực đến email của bạn.</p>
+            <p>Vui lòng kiểm tra và nhập mã xác thực để hoàn tất đăng ký.</p>
+        </div>
+        <form id="verifyForm">
+            <div class="form-group">
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" class="otp-input" required>
+                    <input type="text" maxlength="1" class="otp-input" required>
+                    <input type="text" maxlength="1" class="otp-input" required>
+                    <input type="text" maxlength="1" class="otp-input" required>
+                    <input type="text" maxlength="1" class="otp-input" required>
+                    <input type="text" maxlength="1" class="otp-input" required>
+                </div>
+            </div>
+            <button type="submit" class="verify-button">Xác Thực</button>
+        </form>
+        <div class="verify-options">
+            <div class="countdown">
+                Gửi lại mã sau: <span id="timer">60</span>s
+            </div>
+            <button id="resendCode" class="resend-button" disabled>
+                Gửi lại mã
+            </button>
+        </div>
+        <div class="back-to-register">
+            <a href="#">Quay lại đăng ký</a>
+        </div>
+    </div>
+</div>

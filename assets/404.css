@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.number {
+    font-size: 150px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.illustration {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    margin: 0 20px;
+}
+
+.circle {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: #41b5ef;
+    border-radius: 50%;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: wobble 2s ease-in-out infinite;
+}
+
+.eyes {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.eye {
+    width: 20px;
+    height: 20px;
+    background: #333;
+    border-radius: 50%;
+    animation: blink 3s ease-in-out infinite;
+}
+
+.mouth {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 20px;
+    border-bottom: 4px solid #333;
+    border-radius: 0 0 20px 20px;
+}
+
+.text {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 30px;
+    background: #41b5ef;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes wobble {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+@keyframes blink {
+    0%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(1); }
+    97.5% { transform: scaleY(0); }
+}
+
+@media (max-width: 768px) {
+    .number {
+        font-size: 100px;
+    }
+    
+    .illustration {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .text {
+        font-size: 20px;
+    }
+}

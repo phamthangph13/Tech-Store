@@ -1,0 +1,292 @@
+<div id="paymentModal" class="payment-modal">
+    <div class="payment-content">
+        <!-- Left Sidebar -->
+        <div class="payment-sidebar">
+            <div class="payment-header">
+                <h3>Phương thức thanh toán</h3>
+                <button class="close-payment">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="payment-methods">
+                <button class="method-item active" data-method="qr">
+                    <div class="method-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <div class="method-info">
+                        <h4>Quét mã QR</h4>
+                        <p>Thanh toán nhanh bằng mã QR</p>
+                    </div>
+                </button>
+
+                <button class="method-item" data-method="bank">
+                    <div class="method-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="method-info">
+                        <h4>Chuyển khoản</h4>
+                        <p>Chuyển khoản ngân hàng</p>
+                    </div>
+                </button>
+
+                <button class="method-item" data-method="ewallet">
+                    <div class="method-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="method-info">
+                        <h4>Ví điện tử</h4>
+                        <p>Momo, ZaloPay, VNPay</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Add Promo Code Section -->
+            <div class="promo-code-section">
+                <div class="promo-input">
+                    <input type="text" placeholder="Nhập mã giảm giá" id="promoInput">
+                    <button class="apply-promo" id="applyPromo">
+                        <span>Áp dụng</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <!-- Promo status messages -->
+                <div class="promo-status success" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Đã áp dụng mã giảm giá!</span>
+                </div>
+                <div class="promo-status error" style="display: none;">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Mã giảm giá không hợp lệ</span>
+                </div>
+            </div>
+
+            <div class="payment-summary">
+                <div class="summary-row">
+                    <span>Tổng tiền hàng</span>
+                    <span>2,999,000₫</span>
+                </div>
+                <div class="summary-row">
+                    <span>Giảm giá</span>
+                    <span class="discount">-299,000₫</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Tổng thanh toán</span>
+                    <span>2,700,000₫</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Content Area -->
+        <div class="payment-forms">
+            <!-- QR Code Form -->
+            <div class="payment-form active" id="qr-form">
+                <div class="form-header">
+                    <h3>Quét mã QR để thanh toán</h3>
+                    <p>Sử dụng ứng dụng ngân hàng hoặc ví điện tử để quét</p>
+                </div>
+                <div class="qr-container">
+                    <img src="/assets/images/payments/qr-code.png" alt="QR Code" class="qr-code">
+                    <div class="qr-apps">
+                        <img src="/assets/images/payments/momo.png" alt="Momo">
+                        <img src="/assets/images/payments/zalopay.png" alt="ZaloPay">
+                        <img src="/assets/images/payments/vnpay.png" alt="VNPay">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bank Transfer Form -->
+            <div class="payment-form" id="bank-form">
+                <div class="payment-steps">
+                    <div class="step active">
+                        <span class="step-number">1</span>
+                        <span class="step-text">Thông tin</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <span class="step-text">Xác nhận</span>
+                    </div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <span class="step-text">Hoàn tất</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Thông tin chuyển khoản -->
+                <div class="step-content active" data-step="1">
+                    <div class="form-header">
+                        <h3>Thông tin chuyển khoản</h3>
+                        <p>Vui lòng chuyển khoản theo thông tin dưới đây</p>
+                    </div>
+                    <div class="bank-info">
+                        <div class="bank-card">
+                            <img src="/assets/images/payments/vietcombank.png" alt="Vietcombank" class="bank-logo">
+                            <div class="bank-details">
+                                <div class="detail-item">
+                                    <label>Số tài khoản</label>
+                                    <div class="copy-group">
+                                        <input type="text" value="1234567890" readonly>
+                                        <button class="copy-btn" data-copy="1234567890">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Chủ tài khoản</label>
+                                    <input type="text" value="NGUYEN VAN A" readonly>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Số tiền</label>
+                                    <div class="copy-group">
+                                        <input type="text" value="2,700,000₫" readonly>
+                                        <button class="copy-btn" data-copy="2700000">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Nội dung chuyển khoản</label>
+                                    <div class="copy-group">
+                                        <input type="text" value="THANHTOAN123" readonly>
+                                        <button class="copy-btn" data-copy="THANHTOAN123">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Xác nhận giao dịch -->
+                <div class="step-content" data-step="2">
+                    <div class="form-header">
+                        <h3>Xác nhận giao dịch</h3>
+                        <p>Vui lòng tải lên biên lai chuyển khoản</p>
+                    </div>
+                    <div class="upload-section">
+                        <div class="upload-area" id="uploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Kéo thả hoặc click để tải lên biên lai</p>
+                            <input type="file" id="receiptUpload" accept="image/*" hidden>
+                        </div>
+                        <div class="upload-preview" id="uploadPreview"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Hoàn tất -->
+                <div class="step-content" data-step="3">
+                    <div class="payment-status success">
+                        <div class="status-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="status-message">
+                            <h4>Thanh toán thành công</h4>
+                            <p>Cảm ơn bạn đã sử dụng dịch vụ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Buttons -->
+                <div class="payment-footer">
+                    <button class="btn-back">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Quay lại</span>
+                    </button>
+                    <button class="btn-proceed">
+                        <span>Tiếp tục</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- E-Wallet Form -->
+            <div class="payment-form" id="ewallet-form">
+                <div class="form-header">
+                    <h3>Ví điện tử hỗ trợ</h3>
+                    <p>Các ứng dụng ví điện tử được hỗ trợ thanh toán</p>
+                </div>
+                
+                <div class="wallet-grid">
+                    <div class="wallet-support">
+                        <img src="/assets/images/payments/momo.png" alt="Momo">
+                        <h4>Momo</h4>
+                    </div>
+                    <div class="wallet-support">
+                        <img src="/assets/images/payments/zalopay.png" alt="ZaloPay">
+                        <h4>ZaloPay</h4>
+                    </div>
+                    <div class="wallet-support">
+                        <img src="/assets/images/payments/vnpay.png" alt="VNPay">
+                        <h4>VNPay</h4>
+                    </div>
+                </div>
+
+                <div class="qr-container">
+                    <img src="/assets/images/payments/qr-code.png" alt="QR Code" class="qr-code">
+                    <p class="qr-instruction">Quét mã QR bằng ứng dụng ví điện tử để thanh toán</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Animation cho completion */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Style cho notification */
+.payment-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.5s ease-out;
+    z-index: 1000;
+}
+
+.payment-notification.success {
+    border-left: 4px solid #2ecc71;
+}
+
+.payment-notification i {
+    font-size: 24px;
+    color: #2ecc71;
+}
+
+.notification-content h4 {
+    margin: 0 0 5px 0;
+    color: #2ecc71;
+}
+
+.notification-content p {
+    margin: 0;
+    color: #666;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+</style>

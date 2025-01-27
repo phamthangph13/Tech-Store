@@ -1,0 +1,451 @@
+/* Main Container */
+.store-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+ 
+/* Hero Section */
+.store-hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #1a1a1a, #4a4a4a);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.store-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.store-hero p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Category Filter */
+.category-filter {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.filter-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: #2196F3;
+    color: white;
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    animation: fadeIn 1s ease-out;
+}
+
+/* Product Card Styling */
+.product-card {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.product-image {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.15);
+}
+
+/* Premium Badge */
+.premium-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ffd700 0%, #ff9500 100%);
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInBadge 0.6s ease forwards;
+}
+
+@keyframes fadeInBadge {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Discount Badge */
+.discount-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(135deg, #ff3366 0%, #ff0066 100%);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 51, 102, 0.3);
+    animation: pulseBadge 2s infinite;
+}
+
+@keyframes pulseBadge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255, 51, 102, 0.5); }
+    100% { transform: scale(1); }
+}
+
+/* Product Info Section */
+.product-info {
+    padding: 2rem;
+    background: linear-gradient(180deg, rgba(40, 40, 40, 0.8) 0%, rgba(20, 20, 20, 0.95) 100%);
+    backdrop-filter: blur(10px);
+}
+
+.product-info h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    background: linear-gradient(90deg, #fff, #e0e0e0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+.product-info p {
+    color: #b0b0b0;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Price Container */
+.price-container {
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.original-price {
+    color: #888;
+    text-decoration: line-through;
+    font-size: 1rem;
+}
+
+.discounted-price {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Product Type Badge */
+.product-type-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.type-object {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.type-service {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    color: white;
+}
+
+/* Animation khi load */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.price {
+    animation: fadeIn 0.3s ease-out forwards;
+    
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .price {
+        font-size: 1.2rem;
+    }
+}
+
+/* Add to Cart Button */
+.add-to-cart {
+    width: 100%;
+    padding: 1.2rem;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-to-cart:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.add-to-cart::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: 0.8s;
+    opacity: 0;
+}
+
+.add-to-cart:hover::after {
+    left: 100%;
+    opacity: 1;
+}
+
+/* Card Hover Effect */
+.product-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        800px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.06),
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.product-card:hover::before {
+    opacity: 1;
+}
+
+/* Use Now Button Variant */
+.add-to-cart.use-now {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.add-to-cart.use-now:hover {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+}
+
+/* Loading State */
+.product-card.loading {
+    animation: cardShimmer 2s infinite linear;
+    background: linear-gradient(
+        90deg,
+        #1a1a1a 25%,
+        #2a2a2a 50%,
+        #1a1a1a 75%
+    );
+    background-size: 200% 100%;
+}
+
+@keyframes cardShimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .store-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .category-filter {
+        flex-wrap: wrap;
+    }
+    
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* Smooth transitions for filtering */
+.product-card {
+    transition: all 0.3s ease-out;
+}
+
+/* Enhanced hover effect for product cards */
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Product Transitions */
+.product-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s ease-out;
+}
+
+/* Filter Button Transitions */
+.filter-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2196F3;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.filter-btn:hover::after {
+    transform: scaleX(1);
+}
+
+/* Notification Styling */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    color: white;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.notification.success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #dc3545, #ff4444);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification i {
+    font-size: 1.2rem;
+}
+
+/* Animation for notification icon */
+@keyframes iconBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.notification.success i {
+    color: #fff;
+    animation: iconBounce 1s ease infinite;
+}
+
+.notification.error i {
+    color: #fff;
+    animation: iconBounce 1s ease infinite;
+}
+
+/* Guest button state */
+.add-to-cart.guest {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.add-to-cart.guest:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Smooth Category Transition */
+.products-grid {
+    min-height: 200px; /* Đảm bảo grid không bị co lại khi không có sản phẩm */
+}
+
+/* Active Filter Button Enhancement */
+.filter-btn.active {
+    background: #2196F3;
+    color: white;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+

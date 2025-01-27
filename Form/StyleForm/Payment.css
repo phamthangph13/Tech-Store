@@ -1,0 +1,938 @@
+:root {
+    --primary: #4361ee;
+    --success: #2ecc71;
+    --warning: #f1c40f;
+    --danger: #e74c3c;
+    --text: #2d3436;
+    --text-light: #636e72;
+    --border: #dfe6e9;
+    --bg-light: #f5f6fa;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.payment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-content {
+    background: #1a1a1a;
+    width: 90%;
+    max-width: 1000px;
+    min-height: 600px;
+    max-height: 85vh;
+    border-radius: 20px;
+    display: flex;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+/* Đảm bảo các phần con của modal đều có z-index phù hợp */
+.payment-sidebar,
+.payment-forms,
+.payment-header,
+.payment-methods,
+.payment-summary {
+    position: relative;
+    z-index: 1001;
+}
+
+/* Đảm bảo form payment hiển thị đúng */
+.payment-form {
+    display: none;
+    height: 100%;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.payment-form.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sidebar Styles */
+.payment-sidebar {
+    width: 35%;
+    min-width: 300px;
+    background: #242424;
+    border-radius: 20px 0 0 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #ffffff;
+}
+
+.close-payment {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.close-payment:hover {
+    color: #333;
+}
+
+/* Payment Methods */
+.payment-methods {
+    padding: 20px;
+}
+
+.method-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: #2d2d2d;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #ffffff;
+}
+
+.method-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: #333333;
+}
+
+.method-item.active {
+    border-color: #4361ee;
+    background: rgba(67, 97, 238, 0.15);
+}
+
+.method-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(67, 97, 238, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.method-icon i {
+    font-size: 24px;
+    color: #4361ee;
+}
+
+.method-info h4 {
+    margin: 0 0 5px;
+    font-size: 1rem;
+}
+
+.method-info p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #b3b3b3;
+}
+
+/* Payment Summary */
+.payment-summary {
+    padding: 20px;
+    background: #242424;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    margin-top: auto;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.875rem;
+    color: #b3b3b3;
+}
+
+.summary-row.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ffffff;
+}
+
+.discount {
+    color: #2ecc71;
+}
+
+/* Payment Forms */
+.payment-forms {
+    flex: 1;
+    background: #1a1a1a;
+    color: #ffffff;
+    border-radius: 0 20px 20px 0;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-header h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+}
+
+.form-header p {
+    margin: 0;
+    color: #666;
+}
+
+/* QR Code Form */
+.qr-container {
+    text-align: center;
+    background: #2d2d2d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.qr-code {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 20px;
+}
+
+.qr-apps {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.qr-apps img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+}
+
+/* Bank Transfer Form */
+.bank-info {
+    background: #242424;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bank-card {
+    background: #2d2d2d;
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bank-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.bank-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.bank-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-item label {
+    color: #b3b3b3;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.detail-item input {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: #ffffff;
+    font-size: 1rem;
+    width: 100%;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.copy-group {
+    display: flex;
+    align-items: center;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.copy-group input {
+    border: none;
+    background: transparent;
+    padding: 12px 15px;
+    flex: 1;
+}
+
+.copy-btn {
+    background: rgba(67, 97, 238, 0.1);
+    border: none;
+    padding: 12px 20px;
+    color: #4361ee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copy-btn:hover {
+    background: rgba(67, 97, 238, 0.2);
+}
+
+.copy-btn i {
+    font-size: 1.1rem;
+}
+
+/* Animation for copy success */
+@keyframes copySuccess {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.copy-btn i.fa-check {
+    color: #2ecc71;
+    animation: copySuccess 0.3s ease;
+}
+
+/* E-Wallet Form */
+.wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.wallet-option {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s;
+    background: #2d2d2d;
+}
+
+.wallet-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.wallet-option img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 15px;
+}
+
+.wallet-btn {
+    margin-top: 15px;
+    padding: 8px 24px;
+    background: #4361ee;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.wallet-btn:hover {
+    background: #3145c1;
+}
+
+/* Content Area */
+.step-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Footer Styles */
+.payment-footer {
+    margin-top: auto;
+    padding: 20px 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-back, 
+.btn-proceed {
+    padding: 12px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-back {
+    background: #2d2d2d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.btn-back:hover {
+    background: #363636;
+}
+
+.btn-proceed {
+    background: #4361ee;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-proceed:hover {
+    background: #3145c1;
+    transform: translateY(-1px);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #fff;
+        --text-light: #b2bec3;
+        --border: #2d3436;
+        --bg-light: #2d3436;
+    }
+
+    .payment-content,
+    .payment-sidebar,
+    .payment-forms,
+    .method-item,
+    .bank-info,
+    .form-group input {
+        background: inherit !important;
+        color: inherit !important;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .payment-content {
+        flex-direction: column;
+        width: 95%;
+        height: 90vh;
+    }
+
+    .payment-sidebar {
+        width: 100%;
+        min-width: auto;
+        border-radius: 20px 20px 0 0;
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .payment-forms {
+        border-radius: 0 0 20px 20px;
+    }
+
+    .bank-info {
+        padding: 20px;
+    }
+
+    .bank-card {
+        padding: 20px;
+    }
+
+    .bank-logo {
+        width: 100px;
+    }
+
+    .detail-item input,
+    .copy-group input {
+        font-size: 0.9rem;
+    }
+
+    .copy-btn {
+        padding: 12px 15px;
+    }
+
+    .payment-form {
+        padding: 20px;
+    }
+    
+    .payment-footer {
+        padding: 15px 0 0;
+    }
+    
+    .btn-back, 
+    .btn-proceed {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Payment Steps */
+.payment-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #666;
+    position: relative;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    right: -50%;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: #333;
+    z-index: 0;
+}
+
+.step:last-child::after {
+    display: none;
+}
+
+.step.active {
+    color: #4361ee;
+}
+
+.step.active .step-number {
+    background: #4361ee;
+    color: #fff;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.step-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.step-content.active {
+    display: block;
+}
+
+/* Payment Status */
+.payment-status {
+    text-align: center;
+    padding: 40px;
+    background: #2d2d2d;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.status-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.status-icon i {
+    color: #4361ee;
+}
+
+.payment-status.success .status-icon i {
+    color: #2ecc71;
+}
+
+.status-message h4 {
+    margin: 0 0 10px;
+    font-size: 1.25rem;
+}
+
+.status-message p {
+    margin: 0;
+    color: #666;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-top: 20px;
+}
+
+.upload-area {
+    border: 2px dashed #333;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #4361ee;
+    background: rgba(67, 97, 238, 0.1);
+}
+
+.upload-area i {
+    font-size: 48px;
+    color: #4361ee;
+    margin-bottom: 15px;
+}
+
+.upload-preview {
+    margin-top: 20px;
+    display: none;
+}
+
+.upload-preview img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Button Styles */
+.btn-done {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-done:hover {
+    background: #27ae60;
+    transform: translateY(-1px);
+}
+
+/* Promo Code Section */
+.promo-code-section {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.promo-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.promo-input input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: #1a1a1a;
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.promo-input input:focus {
+    outline: none;
+    border-color: #4361ee;
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.promo-input input::placeholder {
+    color: #666;
+}
+
+.apply-promo {
+    padding: 8px 20px;
+    background: #4361ee;
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.apply-promo:hover {
+    background: #3145c1;
+    transform: translateY(-1px);
+}
+
+.apply-promo i {
+    font-size: 0.9rem;
+}
+
+/* Promo Status Messages */
+.promo-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    animation: fadeIn 0.3s ease;
+}
+
+.promo-status.success {
+    background: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+}
+
+.promo-status.error {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.promo-status i {
+    font-size: 1rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .promo-code-section {
+        padding: 0 15px 15px;
+    }
+
+    .promo-input {
+        flex-direction: column;
+    }
+
+    .apply-promo {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* QR và E-wallet Loading Styles */
+.qr-initial-loading,
+.qr-loading-overlay,
+.ewallet-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.qr-initial-loading {
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 2;
+}
+
+.qr-loading-overlay,
+.ewallet-loading-overlay {
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    z-index: 1;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+}
+
+.loading-content i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #4361ee;
+}
+
+.loading-content i.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+.loading-content i.fa-check-circle {
+    color: #2ecc71;
+    animation: scaleIn 0.3s ease;
+}
+
+.loading-content p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+/* QR Code Image Animation */
+.qr-code {
+    transition: opacity 0.3s ease;
+}
+
+/* Success state for loading overlays */
+.qr-loading-overlay.success,
+.ewallet-loading-overlay.success {
+    background: rgba(46, 204, 113, 0.9);
+}
+
+.qr-loading-overlay.success .loading-content,
+.ewallet-loading-overlay.success .loading-content {
+    animation: successPulse 0.5s ease;
+}
+
+/* Error state for loading overlays */
+.qr-loading-overlay.error,
+.ewallet-loading-overlay.error {
+    background: rgba(231, 76, 60, 0.9);
+}
+
+.qr-loading-overlay.error .loading-content i,
+.ewallet-loading-overlay.error .loading-content i {
+    color: #fff;
+}
+
+.qr-loading-overlay.error .loading-content,
+.ewallet-loading-overlay.error .loading-content {
+    animation: errorShake 0.5s ease;
+}
+
+@keyframes errorShake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Wallet Support Hover Effect */
+.wallet-support {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wallet-support:hover {
+    transform: translateY(-2px);
+    background: rgba(67, 97, 238, 0.1);
+    border-color: #4361ee;
+}
