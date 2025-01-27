@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from pymongo import MongoClient
 from bson import ObjectId
 import bcrypt
@@ -16,12 +16,35 @@ import base64
 import json
 from payos import PayOS, PaymentData, ItemData
 
-app = Flask(__name__, static_folder='PUBLIC', static_url_path='', template_folder='PUBLIC')
+# Lấy đường dẫn tuyệt đối
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.dirname(current_dir)
+public_dir = os.path.join(root_dir, 'PUBLIC')
+
+app = Flask(__name__, 
+    static_folder=None  # Tắt static folder mặc định
+)
+
+# Đăng ký nhiều static folders
+app.add_url_rule('/PUBLIC/<path:filename>',
+    endpoint='public_files',
+    view_func=lambda filename: send_from_directory(public_dir, filename))
+
+app.add_url_rule('/<path:filename>',
+    endpoint='root_files',
+    view_func=lambda filename: send_from_directory(root_dir, filename))
+
 CORS(app, resources={
     r"/*": {
-        "origins": ["http://127.0.0.1:5500", "http://localhost:5500"],
+        "origins": [
+            "http://127.0.0.1:5000",
+            "http://localhost:5000",
+            "http://127.0.0.1:5500",
+            "http://localhost:5500"
+        ],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type"]
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True
     }
 })
 
@@ -66,7 +89,14 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
     config={
-        'app_name': "DouneStore API"
+        'app_name': "DouneStore API",
+        'dom_id': '#swagger-ui',
+        'deepLinking': True,
+        'supportedSubmitMethods': ['get', 'post', 'put', 'delete', 'patch'],
+        'displayOperationId': True,
+        'displayRequestDuration': True,
+        'docExpansion': 'none',
+        'filter': True
     }
 )
 
@@ -77,7 +107,7 @@ JWT_SECRET = os.environ.get('JWT_SECRET', 'your-secret-key')
 @app.route('/Swagger')
 def serve_swagger_spec():
     try:
-        with open('Server-Side/Static/Swagger.json', 'r', encoding='utf-8') as f:
+        with open('static/Swagger.json', 'r', encoding='utf-8') as f:
             return jsonify(json.load(f))
     except FileNotFoundError:
         return jsonify({'error': 'Swagger file not found'}), 404
@@ -86,11 +116,19 @@ def serve_swagger_spec():
 
 @app.route('/')
 def index():
-    return app.send_static_file('checkout.html')
+    return send_from_directory(root_dir, 'index.html')
+
+@app.route('/cancel.html')
+def cancel():
+    return send_from_directory(public_dir, 'cancel.html')
+
+@app.route('/success.html')
+def success():
+    return send_from_directory(public_dir, 'success.html')
 
 @app.route('/create_payment_link', methods=['POST'])
 def create_payment():
-    domain = request.host_url.rstrip('/')
+    domain = request.host_url.rstrip('/')  # Lấy domain hiện tại
     try:
         data = request.get_json()
         
@@ -105,18 +143,61 @@ def create_payment():
         items_data = []
         if 'items' in data:
             for item in data['items']:
+                # Kiểm tra và đảm bảo quantity là số nguyên dương
+                try:
+                    quantity = int(item.get('quantity', 0))
+                    if quantity <= 0:
+                        return jsonify({
+                            "error": "Invalid quantity",
+                            "message": "Số lượng sản phẩm phải lớn hơn 0"
+                        }), 400
+                except ValueError:
+                    return jsonify({
+                        "error": "Invalid quantity format",
+                        "message": "Số lượng phải là số nguyên"
+                    }), 400
+                
+                # Kiểm tra và đảm bảo price là số nguyên dương
+                try:
+                    # Chuyển đổi price thành số nguyên (đơn vị là VND)
+                    price = int(float(item.get('price', 0)))
+                    if price <= 0:
+                        return jsonify({
+                            "error": "Invalid price",
+                            "message": "Giá sản phẩm phải lớn hơn 0"
+                        }), 400
+                except ValueError:
+                    return jsonify({
+                        "error": "Invalid price format",
+                        "message": "Giá sản phẩm phải là số"
+                    }), 400
+                
                 items_data.append(ItemData(
                     name=item['name'],
-                    quantity=item['quantity'],
-                    price=item['price']
+                    quantity=quantity,
+                    price=price
                 ))
+        
+        # Đảm bảo amount cũng là số nguyên
+        try:
+            amount = int(float(data['amount']))
+            if amount <= 0:
+                return jsonify({
+                    "error": "Invalid amount",
+                    "message": "Số tiền phải lớn hơn 0"
+                }), 400
+        except ValueError:
+            return jsonify({
+                "error": "Invalid amount format",
+                "message": "Số tiền phải là số"
+            }), 400
         
         paymentData = PaymentData(
             orderCode=order_code,
-            amount=data['amount'],
+            amount=amount,
             description=data['description'],
-            cancelUrl=f"{domain}/cancel.html",
-            returnUrl=f"{domain}/success.html",
+            cancelUrl=f"{domain}/cancel.html",  # Sử dụng domain động
+            returnUrl=f"{domain}/success.html", # Sử dụng domain động
             signature="",
             items=items_data
         )

@@ -67,7 +67,20 @@
         </svg>
         <h1>Thanh toán thất bại</h1>
         <p>Rất tiếc, giao dịch của bạn không thành công. Vui lòng thử lại hoặc liên hệ với chúng tôi nếu bạn cần hỗ trợ.</p>
+        <div class="order-details" style="text-align: left; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+            <p style="margin: 5px 0;"><strong>Mã đơn hàng:</strong> <span id="orderCode"></span></p>
+            <p style="margin: 5px 0;"><strong>Trạng thái:</strong> <span id="status"></span></p>
+        </div>
         <a href="/index.html" class="button">Quay lại trang chủ</a>
     </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderCode = urlParams.get('orderCode');
+        const status = urlParams.get('status');
+
+        document.getElementById('orderCode').textContent = orderCode || 'Không có thông tin';
+        document.getElementById('status').textContent = status || 'Đã hủy';
+    </script>
 </body>
 </html> 
