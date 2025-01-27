@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render products to DOM
     function renderProducts(products) {
         productsGrid.innerHTML = products.map(product => `
-            <div class="product-card" data-category="${product.category}">
+            <div class="product-card" data-category="${product.category}" data-product-id="${product._id}">
                 <div class="product-image">
                     <img src="${product.image}" alt="${product.name}">
                     ${product.isPremium ? '<div class="premium-badge">Premium</div>' : ''}
@@ -110,7 +110,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function attachActionListeners() {
         const actionButtons = document.querySelectorAll('.add-to-cart');
         actionButtons.forEach(button => {
-            button.addEventListener('click', () => {
+            button.addEventListener('click', async (event) => {
+                // Ngăn chặn hành vi mặc định của button
+                event.preventDefault();
+
                 if (!isUserLoggedIn()) {
                     showNotification('Vui lòng đăng nhập để tiếp tục!', 'error');
                     // Mở modal đăng nhập
@@ -121,24 +124,52 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                // Thêm hiệu ứng click
                 button.classList.add('clicked');
                 const ripple = document.createElement('span');
                 ripple.classList.add('ripple');
                 button.appendChild(ripple);
 
-                setTimeout(() => {
-                    button.classList.remove('clicked');
-                    ripple.remove();
-                }, 600);
-
                 try {
+                    // Lấy product ID từ thẻ cha gần nhất có class 'product-card'
+                    const productCard = button.closest('.product-card');
+                    if (!productCard) throw new Error('Không tìm thấy thông tin sản phẩm');
+
+                    const productId = productCard.dataset.productId; // Thêm data-product-id vào product-card
+                    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+
                     if (button.classList.contains('use-now')) {
                         showNotification('Đang chuyển hướng đến trang dịch vụ!', 'success');
                     } else {
-                        showNotification('Đã thêm vào giỏ hàng!', 'success');
+                        // Gọi API thêm vào giỏ hàng
+                        const response = await fetch('http://localhost:5000/cart/add', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                userId: user.account_link,
+                                productId: productId
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            showNotification('Đã thêm vào giỏ hàng!', 'success');
+                        } else {
+                            throw new Error(data.message || 'Không thể thêm vào giỏ hàng');
+                        }
                     }
                 } catch (error) {
-                    showNotification('Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+                    console.error('Error:', error);
+                    showNotification(error.message || 'Có lỗi xảy ra. Vui lòng thử lại!', 'error');
+                } finally {
+                    // Xóa hiệu ứng click sau 600ms
+                    setTimeout(() => {
+                        button.classList.remove('clicked');
+                        const ripple = button.querySelector('.ripple');
+                        if (ripple) ripple.remove();
+                    }, 600);
                 }
             });
         });

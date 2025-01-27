@@ -808,5 +808,135 @@ def set_default_address(account_link, address_id):
             'message': str(e)
         }), 500
 
+# Cart APIs
+@app.route('/cart/add', methods=['POST'])
+def add_to_cart():
+    try:
+        data = request.get_json()
+        user_id = data.get('userId')
+        product_id = data.get('productId')
+
+        if not user_id or not product_id:
+            return jsonify({
+                'success': False,
+                'message': 'Thiếu thông tin người dùng hoặc sản phẩm'
+            }), 400
+
+        # Kiểm tra sản phẩm tồn tại
+        product = db.Product.find_one({'_id': ObjectId(product_id)})
+        if not product:
+            return jsonify({
+                'success': False,
+                'message': 'Không tìm thấy sản phẩm'
+            }), 404
+
+        # Kiểm tra và tạo giỏ hàng nếu chưa có
+        cart = db.Cart.find_one({'userId': user_id})
+        if not cart:
+            cart = {
+                'userId': user_id,
+                'items': [],
+                'createdAt': datetime.now()
+            }
+            db.Cart.insert_one(cart)
+
+        # Thêm sản phẩm vào giỏ hàng
+        db.Cart.update_one(
+            {'userId': user_id},
+            {
+                '$push': {
+                    'items': {
+                        'productId': product_id,
+                        'quantity': 1,
+                        'addedAt': datetime.now()
+                    }
+                },
+                '$set': {'updatedAt': datetime.now()}
+            }
+        )
+
+        return jsonify({
+            'success': True,
+            'message': 'Đã thêm vào giỏ hàng'
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
+@app.route('/cart/<user_id>', methods=['GET'])
+def get_cart_items(user_id):
+    try:
+        cart = db.Cart.find_one({'userId': user_id})
+        if not cart:
+            return jsonify({
+                'success': True,
+                'items': []
+            })
+
+        # Lấy thông tin chi tiết của từng sản phẩm trong giỏ hàng
+        cart_items = []
+        for item in cart.get('items', []):
+            product = db.Product.find_one({'_id': ObjectId(item['productId'])})
+            if product:
+                product['_id'] = str(product['_id'])
+                cart_items.append({
+                    'product': product,
+                    'quantity': item['quantity'],
+                    'addedAt': item['addedAt'].isoformat() if isinstance(item['addedAt'], datetime) else item['addedAt']
+                })
+
+        return jsonify({
+            'success': True,
+            'items': cart_items
+        })
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
+@app.route('/cart/remove', methods=['DELETE'])
+def remove_from_cart():
+    try:
+        data = request.get_json()
+        user_id = data.get('userId')
+        product_id = data.get('productId')
+
+        if not user_id or not product_id:
+            return jsonify({
+                'success': False,
+                'message': 'Thiếu thông tin người dùng hoặc sản phẩm'
+            }), 400
+
+        # Xóa sản phẩm khỏi giỏ hàng
+        result = db.Cart.update_one(
+            {'userId': user_id},
+            {
+                '$pull': {'items': {'productId': product_id}},
+                '$set': {'updatedAt': datetime.now()}
+            }
+        )
+
+        if result.modified_count > 0:
+            return jsonify({
+                'success': True,
+                'message': 'Đã xóa sản phẩm khỏi giỏ hàng'
+            })
+
+        return jsonify({
+            'success': False,
+            'message': 'Không tìm thấy sản phẩm trong giỏ hàng'
+        }), 404
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
